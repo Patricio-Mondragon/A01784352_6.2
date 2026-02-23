@@ -69,6 +69,20 @@ class TestSistemaHotel(unittest.TestCase):
 
         self.assertFalse(resultado)
 
+    def test_6_json_invalido_hoteles(self):
+        """Debe manejar JSON corrupto sin detener ejecución."""
+        # Crear archivo corrupto manualmente
+        with open("hoteles.json", "w", encoding="utf-8") as archivo:
+            archivo.write("{ json inválido")
+
+        hoteles = Hotel.mostrar_hoteles()
+
+        self.assertEqual(hoteles, [])
+
+    def test_7_cancelar_reservacion_inexistente(self):
+        """Debe retornar False si la reservación no existe."""
+        resultado = Reservacion.cancelar_reservacion(999)
+        self.assertFalse(resultado)
 
 if __name__ == "__main__":
     unittest.main()
